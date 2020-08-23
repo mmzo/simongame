@@ -4,6 +4,7 @@ var userClickedPattern = []
 var randomNumber;
 var randomChosenColor;
 var level = 0;
+var started = false;
 
 $(".btn").click(function(){
     var clickedColor = $(this).attr("id");
@@ -23,7 +24,11 @@ function showH1Level(){
 }
 
 $(document).keypress(function(){
-    nextSequence();
+    if(!started){
+        nextSequence();
+        started = true;
+    }
+    
 })
 
 function checkAnswer(currentIndex,clickedColor){
@@ -109,5 +114,6 @@ function reset(){
     userClickedPattern =[];
     $("h1").text("Press a key to start");
     level = 0;
+    started = false;
 
 }
