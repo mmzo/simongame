@@ -26,6 +26,16 @@ body {
   border-radius: 20%;
 }
 
+.start-game{
+ padding:2% 3%;
+ border: 5px solid black;
+ font-family: 'Press Start 2P', cursive;
+ background-color: #FEF2BF;
+ border-radius: 5%;
+}
+
+
+
 @media (max-width: 700px){
   .btn{
     height: 100px;
