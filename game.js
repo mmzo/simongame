@@ -6,6 +6,7 @@ var randomChosenColor;
 var level = 0;
 var started = false;
 var containerWidth;
+var startGameButton;
 
 $(document).keypress(function () {
   if (!started) {
@@ -69,6 +70,11 @@ function loserScreen() {
 }
 
 function nextSequence() {
+  if ($("button").hasClass("start-game")) {
+    // console.log("Button exists");
+    $(".start-game").remove();
+  }
+
   showH1Level();
   randomNumber = Math.floor(Math.random() * 4);
   randomChosenColor = colourList[randomNumber];
@@ -114,7 +120,13 @@ function buttonSound(color) {
 function reset() {
   gamePattern = [];
   userClickedPattern = [];
-  $("h1").text("Press a Key to Start");
+  if (containerWidth > 800) {
+    $("h1").text("Press A Key to Start");
+  } else {
+    $("h1").text("Click the Button Below to Start");
+    $("h1").after("<button class='start-game'>Start Game</button>");
+  }
+
   level = 0;
   started = false;
   $(".btn").unbind();
@@ -123,15 +135,22 @@ function reset() {
 function evalWindow() {
   containerWidth = $(window).width();
   if (containerWidth > 800) {
-    if ($("h1").text() === "Click here to start") {
-      $("h1").text("Press a Key to Start");
+    if ($("h1").text() === "Click the Button Below to Start") {
+      $("h1").text("Press A Key to Start");
     }
-    $("h1").unbind();
+    $(".start-game").remove();
+    startGameButton = false;
+    // $(".start-game").unbind();
   } else {
-    if ($("h1").text() === "Press a Key to Start") {
-      $("h1").text("Click here to start");
+    if (!startGameButton) {
+      if ($("h1").text() === "Press A Key to Start") {
+        $("h1").text("Click the Button Below to Start");
+        startGameButton = true;
+        $("h1").after("<button class='start-game'>Start Game</button>");
+      }
     }
-    $("h1").click(function () {
+
+    $(".start-game").click(function () {
       if (!started) {
         nextSequence();
         started = true;
@@ -140,7 +159,6 @@ function evalWindow() {
     });
   }
 }
-
 
 $(document).ready(function () {
   evalWindow(); //run when page first loads
